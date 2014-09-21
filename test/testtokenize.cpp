@@ -843,7 +843,7 @@ private:
 
     // #4195 - segfault for "enum { int f ( ) { return = } r = f ( ) ; }"
     void tokenize24() {
-        ASSERT_THROW(tokenizeAndStringify("enum { int f ( ) { return = } r = f ( ) ; }"), InternalError);
+        tokenizeAndStringify("enum { int f ( ) { return = } r = f ( ) ; }");
     }
 
     // #4239 - segfault for "f ( struct { int typedef T x ; } ) { }"
@@ -980,7 +980,7 @@ private:
         } catch (InternalError& e) {
             ASSERT_EQUALS("Analysis failed. If the code is valid then please report this failure.", e.errorMessage);
             ASSERT_EQUALS("cppcheckError", e.id);
-            ASSERT_EQUALS(5, e.token->linenr());
+            ASSERT_EQUALS(7, e.token->linenr());
         }
     }
 

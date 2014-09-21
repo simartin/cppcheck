@@ -113,7 +113,7 @@ class MatchCompiler:
             return '(tok->type()==Token::eString)'
         elif tok == '%type%':
             return (
-                '(tok->isName() && tok->varId()==0U && !tok->isKeyword())'
+                '(tok->isName() && tok->varId()==0U && !tok->isKeyword(/*iSkipTypes=*/true))'
             )
         elif tok == '%var%':
             return 'tok->isName()'

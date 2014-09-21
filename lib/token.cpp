@@ -125,6 +125,40 @@ void Token::update_property_isStandardType()
     }
 }
 
+bool Token::isKeyword(bool iSkipTypes, bool iCPP) const
+{
+    bool ret = false;
+    if (_type == eKeyword)
+        ret = true;
+    else if (_type == eName) {
+        // List of C/C++ keywords as per http://stackoverflow.com/questions/8139659/where-can-i-find-a-list-of-c-and-or-c-keywords-covering-kr1-2-c89-c1x-and
+        static const char * const cOnlyKeywordsTypes[] = { "_Bool", "_Complex", "_Imaginary", "auto", "char", "const", "double", "enum", "float", "int", "long", "register", "short", "signed",
+                                                           "static", "struct", "union", "unsigned", "void", "volatile" };
+        static const char * const cOnlyKeywordsNoTypes[] = { "break", "case", /*"const",*/ "continue", "default", "do", "else", /*"enum",*/ "extern", "for", "goto", "if",
+                                                             "inline", /*"register",*/ "restrict", "return", "sizeof", /*"static", "struct",*/ "switch", "typedef", /*"union",*/
+                                                             /*"volatile",*/ "while" };
+        static const char * const cppKeywordsTypes[] = { "bool", "char16_t", "char32_t", "class", "decltype", "explicit", "friend", "mutable", "wchar_t" };
+        static const char * const cppKeywordsNoTypes[] = { "alignas", "alignof", "asm", "catch", /*"class",*/ "const_cast", "constexpr", "delete", "dynamic_cast",
+                                                           /*"explicit", */"export", "false", /*"friend", "mutable",*/ "namespace", "new", "noexcept", "nullptr", "operator",
+                                                           "private", "protected", "public", "reinterpret_cast", "static_assert", "static_cast", "template", "this",
+                                                           "thread_local", "throw", "true", "try", "typeid", "typename", "using", "virtual" };
+        if (!iSkipTypes) {
+            if (std::binary_search(cOnlyKeywordsTypes, cOnlyKeywordsTypes + sizeof(cOnlyKeywordsTypes) / sizeof(cOnlyKeywordsTypes[0]), _str))
+                ret = true;
+            else if (iCPP)
+                ret = std::binary_search(cppKeywordsTypes, cppKeywordsTypes + sizeof(cppKeywordsTypes) / sizeof(cppKeywordsTypes[0]), _str);
+        }
+        if (!ret) {
+            if (std::binary_search(cOnlyKeywordsNoTypes, cOnlyKeywordsNoTypes + sizeof(cOnlyKeywordsNoTypes) / sizeof(cOnlyKeywordsNoTypes[0]), _str))
+                ret = true;
+            else if (iCPP)
+                ret = std::binary_search(cppKeywordsNoTypes, cppKeywordsNoTypes + sizeof(cppKeywordsNoTypes) / sizeof(cppKeywordsNoTypes[0]), _str);
+        }
+    }
+    if (ret)
+        _type = eKeyword;
+    return ret;
+}
 
 bool Token::isUpperCaseName() const
 {
@@ -317,7 +351,7 @@ static int multiComparePercent(const Token *tok, const char*& haystack, bool emp
         // Type (%type%)
     {
         haystack += 5;
-        if (tok->isName() && tok->varId() == 0 && !tok->isKeyword())
+        if (tok->isName() && tok->varId() == 0 && !tok->isKeyword(/*iSkipTypes=*/true))
             return 1;
     }
     break;

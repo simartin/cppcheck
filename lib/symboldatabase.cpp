@@ -1085,7 +1085,7 @@ bool SymbolDatabase::isFunction(const Token *tok, const Scope* outerScope, const
     }
 
     // regular function?
-    else if (Token::Match(tok, "%var% (") && tok->previous() &&
+    else if (Token::Match(tok, "%var% (") && tok->previous() && !tok->isKeyword(/*iSkipTypes=*/true, isCPP()) &&
              (tok->previous()->isName() || tok->strAt(-1) == ">" || tok->strAt(-1) == "&" || tok->strAt(-1) == "*" || // Either a return type in front of tok
               tok->strAt(-1) == "::" || tok->strAt(-1) == "~" || // or a scope qualifier in front of tok
               outerScope->isClassOrStruct())) { // or a ctor/dtor

@@ -149,7 +149,7 @@ void TokenList::addtoken(const std::string & str, const unsigned int lineno, con
     }
 
     if (isCPP() && str == "delete")
-        _back->isKeyword(true);
+        _back->setKeyword(true);
     _back->linenr(lineno);
     _back->fileIndex(fileno);
 }

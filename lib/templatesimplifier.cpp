@@ -508,7 +508,7 @@ std::list<Token *> TemplateSimplifier::getTemplateInstantiations(Token *tokens)
             if (!tok)
                 break;
         } else if (Token::Match(tok->previous(), "[({};=] %var% <") ||
-                   Token::Match(tok->previous(), "%type% %var% <") ||
+                   Token::Match(tok->previous(), "%var% %var% <") ||
                    Token::Match(tok->tokAt(-2), "[,:] private|protected|public %var% <")) {
 
             // Add inner template instantiations first => go to the ">"

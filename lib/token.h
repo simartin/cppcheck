@@ -222,15 +222,13 @@ public:
     void type(Type t) {
         _type = t;
     }
-    void isKeyword(bool kwd) {
+    void setKeyword(bool kwd) {
         if (kwd)
             _type = eKeyword;
         else if (_type == eKeyword)
             _type = eName;
     }
-    bool isKeyword() const {
-        return _type == eKeyword;
-    }
+    bool isKeyword(bool iSkipTypes = false, bool iCPP = false) const;
     bool isName() const {
         return _type == eName || _type == eType || _type == eVariable || _type == eFunction || _type == eKeyword ||
                _type == eBoolean; // TODO: "true"/"false" aren't really a name...
@@ -742,7 +740,7 @@ private:
      */
     unsigned int _progressValue;
 
-    Type _type;
+    mutable Type _type;
 
     enum {
         fIsUnsigned             = (1 << 0),

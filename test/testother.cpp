@@ -5277,8 +5277,8 @@ private:
                       "[test.cpp:4]: (warning, inconclusive) Array 'a' is filled incompletely. Did you forget to multiply the size given to 'memcpy()' with 'sizeof(*a)'?\n"
                       "[test.cpp:5]: (warning, inconclusive) Array 'a' is filled incompletely. Did you forget to multiply the size given to 'memmove()' with 'sizeof(*a)'?\n", errout.str());
 
-        check("void f() {\n"
-              "    Foo* a[5];\n"
+        check("struct Foo { bool b; }; void f() {\n"
+              "    Foo (*a)[5];\n"
               "    memset(a, 'a', 5);\n"
               "}");
         ASSERT_EQUALS("[test.cpp:3]: (warning, inconclusive) Array 'a' is filled incompletely. Did you forget to multiply the size given to 'memset()' with 'sizeof(*a)'?\n", errout.str());

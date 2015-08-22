@@ -503,7 +503,7 @@ private:
         ASSERT_EQUALS("A", typetok->str());
         Variable v(vartok, typetok, vartok->previous(), 0, Public, 0, 0, &settings.library);
         ASSERT(true == v.isArray());
-        ASSERT(true == v.isPointer());
+        ASSERT(false == v.isPointer());
         ASSERT(false == v.isReference());
     }
 
@@ -978,7 +978,7 @@ private:
 
         if (db) {
             ASSERT_EQUALS(10, db->getVariableListSize() - 1);
-            ASSERT_EQUALS(true, db->getVariableFromVarId(1) && db->getVariableFromVarId(1)->dimensions().size() == 1);
+            ASSERT_EQUALS(true, db->getVariableFromVarId(1) && db->getVariableFromVarId(1)->dimensions().size() == 0);
             ASSERT_EQUALS(true, db->getVariableFromVarId(2) != nullptr);
             ASSERT_EQUALS(true, db->getVariableFromVarId(3) && db->getVariableFromVarId(3)->dimensions().size() == 0);
             ASSERT_EQUALS(true, db->getVariableFromVarId(4) != nullptr);

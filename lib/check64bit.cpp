@@ -100,7 +100,7 @@ void Check64BitPortability::pointerassignment()
                 const Token* tok2 = tok->tokAt(3);
                 while (Token::Match(tok2->next(), ".|::"))
                     tok2 = tok2->tokAt(2);
-                if (!Token::Match(tok2, "%var% ;|+"))
+                if (!Token::Match(tok2, "%var% ;|+|-|*|/"))
                     continue;
 
                 const Variable *var1(tok->next()->variable());

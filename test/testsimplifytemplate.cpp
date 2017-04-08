@@ -1341,11 +1341,14 @@ private:
     }
 
     // Helper function to unit test TemplateSimplifier::getTemplateNamePosition
-    int templateNamePositionHelper(const char code[], unsigned offset = 0) {
+    int templateNamePositionHelper(const char code[], unsigned offset = 0, bool onlyCreateTokens = false) {
         Tokenizer tokenizer(&settings, this);
 
         std::istringstream istr(code);
-        tokenizer.tokenize(istr, "test.cpp", emptyString);
+        if (onlyCreateTokens)
+            tokenizer.createTokens(istr, "test.cpp");
+        else
+            tokenizer.tokenize(istr, "test.cpp", emptyString);
 
         const Token *_tok = tokenizer.tokens();
         for (unsigned i = 0 ; i < offset ; ++i)
@@ -1380,6 +1383,8 @@ private:
                       "template<class T> unsigned A<T>::foo() { return 0; }", 19));
         ASSERT_EQUALS(9, templateNamePositionHelper("template<class T, class U> class A { unsigned foo(); }; "
                       "template<class T, class U> unsigned A<T, U>::foo() { return 0; }", 25));
+        ASSERT_EQUALS(9, templateNamePositionHelper("template<class T, class U> class A { unsigned foo(); }; "
+                      "template<class T, class U> unsigned A<T, U>::foo() { return 0; }", 25, /*onlyCreateTokens=*/true));
     }
 
     void expandSpecialized() {

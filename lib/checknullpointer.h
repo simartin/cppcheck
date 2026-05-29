@@ -67,7 +67,7 @@ private:
     bool analyseWholeProgram(const CTU::FileInfo &ctu, const std::list<Check::FileInfo*> &fileInfo, const Settings& settings, ErrorLogger &errorLogger) override;
 
     /** Get error messages. Used by --errorlist */
-    void getErrorMessages(ErrorLogger *errorLogger, const Settings *settings) const override;
+    void getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const override;
 
     /** class info in WIKI format. Used by --doc */
     std::string classInfo() const override {
@@ -80,7 +80,7 @@ private:
 class CPPCHECKLIB CheckNullPointerImpl : public CheckImpl {
 public:
     /** @brief This constructor is used when running checks. */
-    CheckNullPointerImpl(const Tokenizer *tokenizer, const Settings *settings, ErrorLogger *errorLogger)
+    CheckNullPointerImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger *errorLogger)
         : CheckImpl(tokenizer, settings, errorLogger) {}
 
     /**

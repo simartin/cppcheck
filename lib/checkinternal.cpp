@@ -382,7 +382,7 @@ void CheckInternal::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogg
     if (!tokenizer.getSettings().checks.isEnabled(Checks::internalCheck))
         return;
 
-    CheckInternalImpl checkInternal(&tokenizer, &tokenizer.getSettings(), errorLogger);
+    CheckInternalImpl checkInternal(&tokenizer, tokenizer.getSettings(), errorLogger);
 
     checkInternal.checkTokenMatchPatterns();
     checkInternal.checkTokenSimpleMatchPatterns();
@@ -393,7 +393,7 @@ void CheckInternal::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogg
     checkInternal.checkRedundantTokCheck();
 }
 
-void CheckInternal::getErrorMessages(ErrorLogger *errorLogger, const Settings *settings) const
+void CheckInternal::getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const
 {
     CheckInternalImpl c(nullptr, settings, errorLogger);
     c.simplePatternError(nullptr, "class {", "Match");

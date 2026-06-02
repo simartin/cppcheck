@@ -64,7 +64,7 @@ public:
     CheckBufferOverrun() : Check("Bounds checking") {}
 
 private:
-    void runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger) override;
+    void runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger) override;
 
     /** @brief Parse current TU and extract file info */
     Check::FileInfo *getFileInfo(const Tokenizer &tokenizer, const Settings &settings, const std::string& /*currentConfig*/) const override;
@@ -72,7 +72,7 @@ private:
     /** @brief Analyse all file infos for all TU */
     bool analyseWholeProgram(const CTU::FileInfo &ctu, const std::list<Check::FileInfo*> &fileInfo, const Settings& settings, ErrorLogger &errorLogger) override;
 
-    void getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const override;
+    void getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const override;
 
     Check::FileInfo * loadFileInfoFromXml(const tinyxml2::XMLElement *xmlElement) const override;
 
@@ -96,7 +96,7 @@ class CPPCHECKLIB CheckBufferOverrunImpl : public CheckImpl
 {
 public:
     /** This constructor is used when running checks. */
-    CheckBufferOverrunImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger *errorLogger)
+    CheckBufferOverrunImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger &errorLogger)
         : CheckImpl(tokenizer, settings, errorLogger) {}
 
     void arrayIndex();

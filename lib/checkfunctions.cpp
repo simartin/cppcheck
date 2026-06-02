@@ -853,7 +853,7 @@ void CheckFunctionsImpl::useStandardLibraryError(const Token *tok, const std::st
                 "Consider using " + expected + " instead of loop.");
 }
 
-void CheckFunctions::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
+void CheckFunctions::runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger)
 {
     CheckFunctionsImpl checkFunctions(&tokenizer, tokenizer.getSettings(), errorLogger);
 
@@ -872,7 +872,7 @@ void CheckFunctions::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLog
     checkFunctions.useStandardLibrary();
 }
 
-void CheckFunctions::getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const
+void CheckFunctions::getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const
 {
     CheckFunctionsImpl c(nullptr, settings, errorLogger);
 

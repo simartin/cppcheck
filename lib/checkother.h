@@ -60,9 +60,9 @@ public:
 
 private:
     /** @brief Run checks against the normal token list */
-    void runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger) override;
+    void runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger) override;
 
-    void getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const override;
+    void getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const override;
 
     std::string classInfo() const override {
         return "Other checks\n"
@@ -127,7 +127,7 @@ private:
 class CPPCHECKLIB CheckOtherImpl : public CheckImpl {
 public:
     /** @brief This constructor is used when running checks. */
-    CheckOtherImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger *errorLogger)
+    CheckOtherImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger &errorLogger)
         : CheckImpl(tokenizer, settings, errorLogger) {}
 
     /** Is expression a comparison that checks if a nonzero (unsigned/pointer) expression is less than zero? */

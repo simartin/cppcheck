@@ -1725,7 +1725,7 @@ bool CheckUnusedVarImpl::isEmptyType(const Type* type)
     return (emptyType = false);
 }
 
-void CheckUnusedVar::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
+void CheckUnusedVar::runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger)
 {
     CheckUnusedVarImpl checkUnusedVar(&tokenizer, tokenizer.getSettings(), errorLogger);
 
@@ -1734,7 +1734,7 @@ void CheckUnusedVar::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLog
     checkUnusedVar.checkFunctionVariableUsage();
 }
 
-void CheckUnusedVar::getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const
+void CheckUnusedVar::getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const
 {
     CheckUnusedVarImpl c(nullptr, settings, errorLogger);
     c.unusedVariableError(nullptr, "varname");

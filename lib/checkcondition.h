@@ -54,9 +54,9 @@ public:
     CheckCondition() : Check("Condition") {}
 
 private:
-    void runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger) override;
+    void runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger) override;
 
-    void getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const override;
+    void getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const override;
 
     std::string classInfo() const override {
         return "Match conditions with assignments and other conditions:\n"
@@ -81,7 +81,7 @@ private:
 class CPPCHECKLIB CheckConditionImpl : public CheckImpl {
 public:
     /** This constructor is used when running checks. */
-    CheckConditionImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger *errorLogger)
+    CheckConditionImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger &errorLogger)
         : CheckImpl(tokenizer, settings, errorLogger) {}
 
     /** mismatching assignment / comparison */

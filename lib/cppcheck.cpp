@@ -1358,7 +1358,7 @@ void CppCheck::checkNormalTokens(const Tokenizer &tokenizer, AnalyzerInformation
             }
 
             Timer::run(c->name() + "::runChecks", mTimerResults, [&]() {
-                c->runChecks(tokenizer, &mErrorLogger);
+                c->runChecks(tokenizer, mErrorLogger);
             });
         }
     }
@@ -1714,7 +1714,7 @@ void CppCheck::getErrorMessages(ErrorLogger &errorlogger)
 
     // call all "getErrorMessages" in all registered Check classes
     for (const Check * const c : CheckInstances::get())
-        c->getErrorMessages(&errorlogger, s);
+        c->getErrorMessages(errorlogger, s);
 
     CheckUnusedFunctions::getErrorMessages(errorlogger);
     Preprocessor::getErrorMessages(errorlogger, s);

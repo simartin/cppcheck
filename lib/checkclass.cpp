@@ -106,7 +106,7 @@ static bool isVclTypeInit(const Type *type)
 }
 //---------------------------------------------------------------------------
 
-CheckClassImpl::CheckClassImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger *errorLogger)
+CheckClassImpl::CheckClassImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger &errorLogger)
     : CheckImpl(tokenizer, settings, errorLogger),
     mSymbolDatabase(tokenizer?tokenizer->getSymbolDatabase():nullptr)
 {}
@@ -3833,7 +3833,7 @@ bool CheckClass::analyseWholeProgram(const CTU::FileInfo &ctu, const std::list<C
     (void)ctu;
     (void)settings;
 
-    CheckClassImpl dummy(nullptr, settings, &errorLogger);
+    CheckClassImpl dummy(nullptr, settings, errorLogger);
     dummy.
     logChecker("CheckClass::analyseWholeProgram");
 
@@ -3882,7 +3882,7 @@ bool CheckClass::analyseWholeProgram(const CTU::FileInfo &ctu, const std::list<C
     return foundErrors;
 }
 
-void CheckClass::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
+void CheckClass::runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger)
 {
     if (tokenizer.isC())
         return;
@@ -3913,7 +3913,7 @@ void CheckClass::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
     checkClass.checkUnsafeClassRefMember();
 }
 
-void CheckClass::getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const
+void CheckClass::getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const
 {
     CheckClassImpl c(nullptr, settings, errorLogger);
     c.noConstructorError(nullptr, "classname", false);

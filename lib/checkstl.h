@@ -53,9 +53,9 @@ public:
 
 private:
     /** run checks, the token list is not simplified */
-    void runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger) override;
+    void runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger) override;
 
-    void getErrorMessages(ErrorLogger* errorLogger, const Settings& settings) const override;
+    void getErrorMessages(ErrorLogger& errorLogger, const Settings& settings) const override;
 
     std::string classInfo() const override {
         return "Check for invalid usage of STL:\n"
@@ -83,7 +83,7 @@ private:
 class CPPCHECKLIB CheckStlImpl : public CheckImpl {
 public:
     /** This constructor is used when running checks. */
-    CheckStlImpl(const Tokenizer* tokenizer, const Settings& settings, ErrorLogger* errorLogger)
+    CheckStlImpl(const Tokenizer* tokenizer, const Settings& settings, ErrorLogger& errorLogger)
         : CheckImpl(tokenizer, settings, errorLogger) {}
 
     /** Accessing container out of bounds using ValueFlow */

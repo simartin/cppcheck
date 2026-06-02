@@ -1753,7 +1753,7 @@ bool CheckUninitVar::analyseWholeProgram(const CTU::FileInfo &ctu, const std::li
 {
     (void)settings;
 
-    CheckUninitVarImpl dummy(nullptr, settings, &errorLogger);
+    CheckUninitVarImpl dummy(nullptr, settings, errorLogger);
     dummy.
     logChecker("CheckUninitVar::analyseWholeProgram");
 
@@ -1797,14 +1797,14 @@ bool CheckUninitVar::analyseWholeProgram(const CTU::FileInfo &ctu, const std::li
     return foundErrors;
 }
 
-void CheckUninitVar::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
+void CheckUninitVar::runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger)
 {
     CheckUninitVarImpl checkUninitVar(&tokenizer, tokenizer.getSettings(), errorLogger);
     checkUninitVar.valueFlowUninit();
     checkUninitVar.check();
 }
 
-void CheckUninitVar::getErrorMessages(ErrorLogger* errorLogger, const Settings& settings) const
+void CheckUninitVar::getErrorMessages(ErrorLogger& errorLogger, const Settings& settings) const
 {
     CheckUninitVarImpl c(nullptr, settings, errorLogger);
 

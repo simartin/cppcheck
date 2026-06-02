@@ -990,7 +990,7 @@ Check::FileInfo * CheckBufferOverrun::loadFileInfoFromXml(const tinyxml2::XMLEle
 /** @brief Analyse all file infos for all TU */
 bool CheckBufferOverrun::analyseWholeProgram(const CTU::FileInfo &ctu, const std::list<Check::FileInfo*> &fileInfo, const Settings& settings, ErrorLogger &errorLogger)
 {
-    CheckBufferOverrunImpl dummy(nullptr, settings, &errorLogger);
+    CheckBufferOverrunImpl dummy(nullptr, settings, errorLogger);
     dummy.
     logChecker("CheckBufferOverrun::analyseWholeProgram");
 
@@ -1214,7 +1214,7 @@ void CheckBufferOverrunImpl::negativeMemoryAllocationSizeError(const Token* tok,
                 msg, CWE131, inconclusive ? Certainty::inconclusive : Certainty::normal);
 }
 
-void CheckBufferOverrun::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
+void CheckBufferOverrun::runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger)
 {
     CheckBufferOverrunImpl checkBufferOverrun(&tokenizer, tokenizer.getSettings(), errorLogger);
     checkBufferOverrun.arrayIndex();
@@ -1227,7 +1227,7 @@ void CheckBufferOverrun::runChecks(const Tokenizer &tokenizer, ErrorLogger *erro
     checkBufferOverrun.negativeArraySize();
 }
 
-void CheckBufferOverrun::getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const
+void CheckBufferOverrun::getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const
 {
     CheckBufferOverrunImpl c(nullptr, settings, errorLogger);
     c.arrayIndexError(nullptr, std::vector<Dimension>(), std::vector<ValueFlow::Value>());

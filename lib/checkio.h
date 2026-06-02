@@ -50,9 +50,9 @@ public:
 
 private:
     /** @brief Run checks on the normal token list */
-    void runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger) override;
+    void runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger) override;
 
-    void getErrorMessages(ErrorLogger *errorLogger, const Settings &settings) const override;
+    void getErrorMessages(ErrorLogger& errorLogger, const Settings &settings) const override;
 
     std::string classInfo() const override {
         return "Check format string input/output operations.\n"
@@ -72,7 +72,7 @@ private:
 class CPPCHECKLIB CheckIOImpl : public CheckImpl {
 public:
     /** @brief This constructor is used when running checks. */
-    CheckIOImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger *errorLogger)
+    CheckIOImpl(const Tokenizer *tokenizer, const Settings &settings, ErrorLogger &errorLogger)
         : CheckImpl(tokenizer, settings, errorLogger) {}
 
     /** @brief %Check for missusage of std::cout */

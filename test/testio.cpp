@@ -109,12 +109,12 @@ private:
 
         // Check..
         if (options.onlyFormatStr) {
-            CheckIOImpl checkIO(&tokenizer, settings1, this);
+            CheckIOImpl checkIO(&tokenizer, settings1, *this);
             checkIO.checkWrongPrintfScanfArguments();
             return;
         }
         CheckIO check;
-        runChecks(check, tokenizer, this);
+        runChecks(check, tokenizer, *this);
     }
 
     void coutCerrMisusage() {

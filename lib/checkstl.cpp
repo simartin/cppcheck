@@ -3453,7 +3453,7 @@ void CheckStlImpl::checkMutexes()
     }
 }
 
-void CheckStl::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
+void CheckStl::runChecks(const Tokenizer &tokenizer, ErrorLogger& errorLogger)
 {
     if (!tokenizer.isCPP()) {
         return;
@@ -3490,7 +3490,7 @@ void CheckStl::runChecks(const Tokenizer &tokenizer, ErrorLogger *errorLogger)
     checkStl.size();
 }
 
-void CheckStl::getErrorMessages(ErrorLogger* errorLogger, const Settings& settings) const
+void CheckStl::getErrorMessages(ErrorLogger& errorLogger, const Settings& settings) const
 {
     CheckStlImpl c(nullptr, settings, errorLogger);
     c.outOfBoundsError(nullptr, "container", nullptr, "x", nullptr);

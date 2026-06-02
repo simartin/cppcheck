@@ -16,39 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//---------------------------------------------------------------------------
-#ifndef regexH
-#define regexH
-//---------------------------------------------------------------------------
+#ifndef ruleH
+#define ruleH
 
 #ifdef HAVE_RULES
 
-#include "config.h"
+#include "errortypes.h"
 
-#include <cstdint>
-#include <functional>
 #include <memory>
 #include <string>
 
-class CPPCHECKLIB Regex
+class Regex;
+
+/** Rule */
+struct Rule
 {
-public:
-    virtual ~Regex() = default;
-
-    using MatchFn = std::function<void (int start, int end)>;
-    virtual std::string match(const std::string& str, const MatchFn& matchFn) const = 0;
-
-    enum class Engine : std::uint8_t
-    {
-        Unknown = 0,
-        Pcre = 1
-    };
-
-    virtual Engine engine() const = 0;
-
-    static std::shared_ptr<Regex> create(std::string pattern, Engine engine, std::string& err);
+    std::string tokenlist = "normal"; // use normal tokenlist
+    std::string pattern;
+    std::string id = "rule"; // default id
+    std::string summary;
+    Severity severity = Severity::style; // default severity
+    std::shared_ptr<Regex> regex;
 };
-
 #endif // HAVE_RULES
 
-#endif // regexH
+#endif // ruleH

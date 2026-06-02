@@ -179,6 +179,10 @@ namespace {
         std::string compile();
         std::string match(const std::string& str, const MatchFn& matchFn) const override;
 
+        Engine engine() const override {
+            return Engine::Pcre;
+        }
+
     private:
         std::string mPattern;
         pcre* mRe{};
@@ -254,6 +258,7 @@ static T* createAndCompileRegex(std::string pattern, std::string& err)
     return regex;
 }
 
+// cppcheck-suppress shadowFunction - FP see #14802
 std::shared_ptr<Regex> Regex::create(std::string pattern, Engine engine, std::string& err)
 {
     Regex* regex = nullptr;

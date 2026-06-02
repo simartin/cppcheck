@@ -5576,10 +5576,10 @@ private:
         SimpleTokenizer tokenizer(settings, *this);
         ASSERT_LOC(tokenizer.tokenize(code), file, line);
 
-        CTU::FileInfo *ctu = CTU::getFileInfo(tokenizer);
+        const CTU::FileInfo *ctu = CTU::getFileInfo(tokenizer);
 
         // Check code..
-        std::list<Check::FileInfo*> fileInfo;
+        std::list<const Check::FileInfo*> fileInfo;
         CheckUninitVar check;
         Check& c = getCheck(check);
         fileInfo.push_back(c.getFileInfo(tokenizer, settings, ""));

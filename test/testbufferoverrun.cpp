@@ -5361,9 +5361,9 @@ private:
         SimpleTokenizer tokenizer(settings0, *this);
         ASSERT_LOC(tokenizer.tokenize(code), file, line);
 
-        CTU::FileInfo *ctu = CTU::getFileInfo(tokenizer);
+        const CTU::FileInfo *ctu = CTU::getFileInfo(tokenizer);
 
-        std::list<Check::FileInfo*> fileInfo;
+        std::list<const Check::FileInfo*> fileInfo;
         CheckBufferOverrun check;
         Check& c = getCheck(check);
         fileInfo.push_back(c.getFileInfo(tokenizer, settings0, ""));

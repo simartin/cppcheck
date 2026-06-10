@@ -2362,6 +2362,9 @@ private:
         checkIntToPointerCast("struct S { int i; };\n" // #13886, don't crash
                               "int f() { return sizeof(((struct S*)0)->i); }");
         ASSERT_EQUALS("", errout_str());
+
+        checkIntToPointerCast("auto p = (int*)0b10;"); // #14180
+        ASSERT_EQUALS("[test.cpp:1:10]: (portability) Casting non-zero binary integer literal to pointer. [intToPointerCast]\n", errout_str());
     }
 
     struct CheckInvalidPointerCastOptions

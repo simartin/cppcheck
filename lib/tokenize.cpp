@@ -7003,6 +7003,7 @@ Token *Tokenizer::simplifyAddBracesPair(Token *tok, bool commandWithCondition)
 
         tokAfterCondition->previous()->insertToken("{");
         Token * tokOpenBrace=tokAfterCondition->previous();
+        tokOpenBrace->column(tokAfterCondition->column());
 
         tokEnd->insertToken("}");
         Token * tokCloseBrace=tokEnd->next();

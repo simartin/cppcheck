@@ -3296,8 +3296,11 @@ static void valueFlowAfterMove(const TokenList& tokenlist, const SymbolDatabase&
                         ternaryColon = ternaryColon->astParent();
                     if (Token::simpleMatch(ternaryColon, ":")) {
                         endOfFunctionCall = ternaryColon->astOperand2();
-                        if (Token::simpleMatch(endOfFunctionCall, "("))
-                            endOfFunctionCall = endOfFunctionCall->link();
+                        Token* next = nextAfterAstRightmostLeaf(endOfFunctionCall);
+                        if (next)
+                            endOfFunctionCall = next;
+                        else
+                            endOfFunctionCall = endOfFunctionCall->next();
                     }
                 }
                 ValueFlow::Value value;

@@ -4894,6 +4894,18 @@ private:
               "}\n");
         ASSERT_EQUALS("[test.cpp:6:10]: (style) Parameter 's' can be declared as reference to const [constParameterReference]\n",
                       errout_str());
+
+        check("struct S { std::string a; };\n" // #13678
+              "struct T { S s; };\n"
+              "bool f(S* s) {\n"
+              "    return s->a.empty();\n"
+              "}\n"
+              "bool g(T* t) {\n"
+              "    return t->s.a.empty();\n"
+              "}\n");
+        ASSERT_EQUALS("[test.cpp:3:11]: (style) Parameter 's' can be declared as pointer to const [constParameterPointer]\n"
+                      "[test.cpp:6:11]: (style) Parameter 't' can be declared as pointer to const [constParameterPointer]\n",
+                      errout_str());
     }
 
     void constArray() {

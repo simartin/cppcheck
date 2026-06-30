@@ -98,6 +98,7 @@ private:
         TEST_CASE(simplifyUsing10335);
         TEST_CASE(simplifyUsing10720);
         TEST_CASE(simplifyUsing13873); // function declaration
+        TEST_CASE(simplifyUsing14877);
 
         TEST_CASE(scopeInfo1);
         TEST_CASE(scopeInfo2);
@@ -1665,6 +1666,12 @@ private:
         const char code3[] = "using NS1::f;\n"
                              "namespace NS1 { void* f(); }\n";
         ASSERT_EQUALS("namespace NS1 { void * f ( ) ; }", tok(code3));
+    }
+
+    void simplifyUsing14877() {
+        const char code[] = "using C = struct C { C() {} };";
+        const char expected[] = "struct C { C ( ) { } } ;";
+        ASSERT_EQUALS(expected, tok(code));
     }
 
     void scopeInfo1() {

@@ -3015,7 +3015,6 @@ bool Tokenizer::simplifyUsing()
                 Token::Match(tok->linkAt(2), "] ] = ::| %name%")))))
             continue;
 
-        const std::string& name = tok->strAt(1);
         const Token *nameToken = tok->next();
         std::string scope = currentScope->fullName;
         Token *usingStart = tok;
@@ -3064,7 +3063,7 @@ bool Tokenizer::simplifyUsing()
             if (!hasName) {
                 std::string newName;
                 if (structEnd->strAt(2) == ";")
-                    newName = name;
+                    newName = nameToken->str();
                 else
                     newName = "Unnamed" + std::to_string(mUnnamedCount++);
                 TokenList::copyTokens(structEnd->next(), tok, start);
@@ -3211,7 +3210,7 @@ bool Tokenizer::simplifyUsing()
             if (!isTypedefInfoAdded && Token::Match(tok1, "%name% (")) {
                 isTypedefInfoAdded = true;
                 TypedefInfo usingInfo;
-                usingInfo.name = name;
+                usingInfo.name = nameToken->str();
                 usingInfo.filename = list.file(nameToken);
                 usingInfo.lineNumber = nameToken->linenr();
                 usingInfo.column = nameToken->column();

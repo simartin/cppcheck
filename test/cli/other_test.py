@@ -4862,3 +4862,45 @@ def test_ipc_inline_suppressions(tmp_path):
     stdout_lines.sort()
     assert stdout_lines == stdout_exp
     assert stderr.splitlines() == []
+
+test_redundant_file_reads_params = [
+    ([],                       3),
+    (['--suppress=zerodiv'],   1),
+    (['--template=cppcheck1'], 1),
+    (['--xml'],                1),
+]
+
+@pytest.mark.skipif(sys.platform != 'linux' or 'ASAN_OPTIONS' in os.environ, reason="uses strace")
+@pytest.mark.parametrize('flags,expected', test_redundant_file_reads_params)
+def test_redundant_file_reads(tmpdir, flags, expected):
+    source_pathname = os.path.join(tmpdir, 'test.c')
+    content = """
+void f(int x) {
+    int y = x / 0;
+    int z = x / 0;
+}
+"""
+    cppcheck_path = __lookup_cppcheck_exe()
+
+    with open(source_pathname, 'wt') as f:
+        f.write(content)
+
+    args = [
+        'strace',
+         '--summary-only',
+         '--summary-columns=count',
+         '--trace=openat',
+         '--follow-forks',
+         f'--trace-path={source_pathname}',
+         cppcheck_path,
+         '-q',
+         source_pathname,
+    ]
+
+    args += flags
+    proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+
+    _, stderr = proc.communicate()
+
+    assert proc.returncode == 0
+    assert stderr.splitlines()[-1].strip() == f'{expected} total'.encode('utf-8')

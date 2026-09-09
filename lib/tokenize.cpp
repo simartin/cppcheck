@@ -10020,6 +10020,15 @@ void Tokenizer::simplifyKeyword()
             }
         }
 
+        if (isC() && (tok->str() == "_Noreturn" || tok->str() == "noreturn")) {
+            Token *nameTok = tok;
+            while (Token::Match(nameTok, "%name%|*"))
+                nameTok = nameTok->next();
+            if (nameTok && nameTok->str() == "(" && TokenList::isFunctionHead(nameTok, "{;")) {
+                nameTok->previous()->isAttributeNoreturn(true);
+            }
+        }
+
         if (isC() || mSettings.standards.cpp == Standards::CPP03) {
             if (tok->str() == "auto")
                 tok->deleteThis();

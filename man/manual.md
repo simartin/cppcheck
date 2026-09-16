@@ -308,6 +308,17 @@ To ignore certain folders you can use `-i`. This will skip analysis of source fi
 
     cppcheck --project=compile_commands.json -ifoo
 
+### `-isystem`, `-I`, `--sysroot`
+
+We have a [script](https://github.com/cppcheck-opensource/cppcheck/blob/main/tools/tweak-compile-commands.py) that tweaks compile_commands.json.
+
+You can use it to:
+ * use `--sysroot` flags in Cppcheck analysis
+ * use `-isystem` paths in Cppcheck analysis
+ * remove `-I` paths from the compile_commands.json
+
+See [script documentation](https://github.com/cppcheck-opensource/cppcheck/blob/main/tools/tweak-compile-commands.md).
+
 ## Visual Studio
 
 You can run Cppcheck on individual project files (`*.vcxproj`) or on a whole solution (`*.sln`) or (`*.slnx`).

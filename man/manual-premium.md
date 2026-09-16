@@ -307,6 +307,17 @@ To ignore certain folders you can use `-i`. This will skip analysis of source fi
 
     cppcheck --project=compile_commands.json -ifoo
 
+### `-isystem`, `-I`, `--sysroot`
+
+We have a [script](https://github.com/cppcheck-opensource/cppcheck/blob/main/tools/tweak-compile-commands.py) that tweaks compile_commands.json.
+
+You can use it to:
+ * use `--sysroot` flags in Cppcheck analysis
+ * use `-isystem` paths in Cppcheck analysis
+ * remove `-I` paths from the compile_commands.json
+
+See [script documentation](https://github.com/cppcheck-opensource/cppcheck/blob/main/tools/tweak-compile-commands.md).
+
 ## Visual Studio
 
 You can run Cppcheck on individual project files (`*.vcxproj`) or on a whole solution (`*.sln`) or (`*.slnx`).
@@ -1166,6 +1177,7 @@ To use a `.cfg` file shipped with Cppcheck, pass the `--library=<lib>` option. T
 | `lua.cfg` | | |
 | `mfc.cfg` | [MFC](https://learn.microsoft.com/en-us/cpp/mfc/mfc-desktop-applications) | |
 | `microsoft_atl.cfg` | [ATL](https://learn.microsoft.com/en-us/cpp/atl/active-template-library-atl-concepts) | |
+| `microsoft_gsl.cfg` | [Microsoft.GSL](https://github.com/microsoft/gsl) | |
 | `microsoft_sal.cfg` | [SAL annotations](https://learn.microsoft.com/en-us/cpp/c-runtime-library/sal-annotations) | |
 | `microsoft_unittest.cfg` | [CppUnitTest](https://learn.microsoft.com/en-us/visualstudio/test/microsoft-visualstudio-testtools-cppunittestframework-api-reference) | |
 | `motif.cfg` | | |
